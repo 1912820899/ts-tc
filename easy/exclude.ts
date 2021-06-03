@@ -12,7 +12,6 @@
   元组；tuple
   联合类型：'a'|'c'
   keyof Object
-  
 */
 /* 
   注意 class 类型是一个不可拆分的整体
@@ -32,3 +31,14 @@ type ts = a extends b ? never : a;
 type d = mExclude<'t'|'a', keyof b>;
 const aaa: d = ;
 type aaaa = keyof a
+
+
+ enum E1{
+  a,b
+}
+
+ enum E2{
+  a,c
+}
+
+type c = keyof E1

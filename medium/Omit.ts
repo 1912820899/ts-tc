@@ -22,3 +22,11 @@ interface Todo {
 type TodoPreview = myOmit<Todo, "description" | "title">;
 type TodoPreview1 = Om<Todo, "description" | "title">;
 type a = Omit<Todo, "description" | "title">;
+
+// 复盘 Omit,Omit<T,U>作用，从T中排除掉与U相同部分
+// Exclude 从 T中排除与U相同部分
+type Omit2<T,U> = Pick<T,Exclude<keyof T,U>>
+type aa = Omit2<Todo, "description" | "title">;
+
+
+//UNKNOWN: Exclude Extrade 针对 联合类型生效 

@@ -4,3 +4,7 @@ type Pop<T extends any[]> = T extends [...infer V, any] ? V : never;
 
 type arr1 = ["a", "b", "c", "d"];
 type re1 = Pop<arr1>;
+// 复盘 Pop 
+// 利用 infer 可以推断任意类型
+type Pop2<T extends any[]> = T extends [...infer K, any] ? K : never;
+type re2 = Pop2<arr1>;

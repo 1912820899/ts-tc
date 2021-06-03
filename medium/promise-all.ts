@@ -1,11 +1,12 @@
 /* interface PromiseAll<T extends any[]> {
   (...args: T): Promise<Pm<T>[]>;
 } */
-type PromiseAll<T extends any[]> = (val:T) => [...Pm<T>];
+type PromiseAll<T extends any[]> = (val: readonly [...T]) => [...Pm<T>];
 
 type Pm<T> = T extends () => Promise<infer K> ? K : T;
 
 type d = Pm<() => Promise<string>>;
+
 const f: PromiseAll = (arr: any[]) => {
   let res = [];
   arr.forEach(async (fn) => {
@@ -41,3 +42,19 @@ async function PromiseAll(arr: any[]) {
   return res;
 }
 const p1 = PromiseAll([promise1, promise2, promise3]);
+
+
+type arr1<T extends any[]> = {
+  [k in keyof T]: T[k];
+};
+
+
+
+type arr2 = arr1<[string]>;
+
+
+
+
+type arr3 = keyof [string]; // number | keyof []
+
+

@@ -8,4 +8,7 @@ type a = {
   d: string;
   c: string;
 };
-type d = myPick<a, "t" | "d">;
+type d = Pick<a, "t" | "d">;
+
+// 复盘
+// Pick 第二个参数需要是联合类型

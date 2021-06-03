@@ -26,3 +26,20 @@ const todo: Readonly2<Todo, "title" | "description">;
 todo.title = "Hello"; // Error: cannot reassign a readonly property
 todo.description = "barFoo"; // Error: cannot reassign a readonly property
 todo.completed = true; // OK
+
+// 复盘
+// 使用 Extract 范型提取相同部分
+// 使用 Omit 范型排除相同部分
+type Re<T extends {}, K extends keyof T> = {
+  readonly [key in Extract<keyof T, K>]: T[key];
+} &
+  {
+    [key in keyof Omit< T,  K>]: T[key];
+  };
+
+type are = {
+  a: string;
+  b: string;
+};
+
+type bre = Re<are, "a">;

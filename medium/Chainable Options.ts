@@ -5,19 +5,24 @@ type Chainable<T> = {
   option<K extends string, V>(key: K, val: V): Chainable<T & { [k in K]: V }>;
   get(): T;
 };
-declare const config: Chainable<{}>
+declare const config: Chainable<{}>;
 
 const result = config
-  .option('foo', 123)
-  .option('name', 'type-challenges')
-  .option('bar', { value: 'Hello World' })
-  .get()
+  .option("foo", 123)
+  .option("name", "type-challenges")
+  .option("bar", { value: "Hello World" })
+  .get();
 
 // expect the type of result to be:
 interface Result {
-  foo: number
-  name: string
+  foo: number;
+  name: string;
   bar: {
-    value: string
-  }
+    value: string;
+  };
 }
+// 复盘
+// UNKNOWN:对范型引用依旧不太明了
+type Chainable1<T> = {
+  option<K extends string, V>(key: K, val: V): Chainable1<T & { [k in K]: V }>;
+};
