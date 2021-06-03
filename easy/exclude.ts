@@ -29,5 +29,6 @@ type b = {
 
 type ts = a extends b ? never : a;
 
-type d = mExclude<keyof a, keyof b>;
-const aaa: d = "t";
+type d = mExclude<'t'|'a', keyof b>;
+const aaa: d = ;
+type aaaa = keyof a
