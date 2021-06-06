@@ -7,31 +7,12 @@ type Foo = {
 
 type A = RemoveIndexSignature<Foo>; // expected { foo(): void }
 
+// 不能把 string extends K ? never : number extends K  ? never : K 替换成 Exclud<string|number,K> ,因为这里的k 也是一个联合类型。
+// 分步操作，不能替换成联合操作。
 type RemoveIndexSignature<T> = {
-  [k in Exclude<keyof T, string>]: T[k];
-};
-
-type a = keyof Foo extends keyof Foo ? keyof Foo : never;
-
-type FieldState = {
-  value: string;
-};
-
-type FormState = { isValid: boolean } & { [fieldName: string]: FieldState };
-
-// 将它用于从某些地方获取的 JavaScript 对象
-declare const foo: FormState;
-
-const isValidBool = foo.isValid;
-const somethingFieldState = foo["something"];
-
-
-
-
-
-
-// 使用它来创建一个对象时，将不会工作
-const bar: FormState = {
-  // 'isValid' 不能赋值给 'FieldState'
-  isValid:true
+  [K in keyof T as string extends K
+    ? never
+    : number extends K
+    ? never
+    : K]: T[K];
 };
