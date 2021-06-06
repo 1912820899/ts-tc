@@ -22,7 +22,9 @@ interface Result {
   };
 }
 // 复盘
-// UNKNOWN:对范型引用依旧不太明了
 type Chainable1<T> = {
   option<K extends string, V>(key: K, val: V): Chainable1<T & { [k in K]: V }>;
 };
+declare const aconfig: Chainable1<{}>;
+
+const c = aconfig.option("s", "s").option("a", "s");

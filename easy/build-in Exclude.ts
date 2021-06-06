@@ -9,7 +9,7 @@
   'b' extends 'c' ? => never
   最后返回 => 'a'
 */
-
+// Exclude 在联合类型中使用,从T排除掉U，返回剩余 T
 
 type myExclude<T,U> = T extends U ? never:T
 

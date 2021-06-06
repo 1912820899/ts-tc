@@ -29,16 +29,3 @@ type b = {
 type ts = a extends b ? never : a;
 
 type d = mExclude<'t'|'a', keyof b>;
-const aaa: d = ;
-type aaaa = keyof a
-
-
- enum E1{
-  a,b
-}
-
- enum E2{
-  a,c
-}
-
-type c = keyof E1
