@@ -7,12 +7,6 @@
 type myOmit<T, K> = {
   [P in Exclude<keyof T, K>]: T[P];
 };
-type O<T, K extends keyof T> = {
-  [P in K as P extends keyof T ? never : keyof K]: T[P];
-};
-type Om<T, K extends keyof T> = {
-  [Key in keyof T extends K as Key ?  : Keynever]: T[Key];
-};
 
 interface Todo {
   title: string;
@@ -20,13 +14,15 @@ interface Todo {
   completed: boolean;
 }
 type TodoPreview = myOmit<Todo, "description" | "title">;
-type TodoPreview1 = Om<Todo, "description" | "title">;
-type a = Omit<Todo, "description" | "title">;
 
 // 复盘 Omit,Omit<T,U>作用，从T中排除掉与U相同部分
-// Exclude 从 T中排除与U相同部分
+
+
+
+// 官方 Omit 实现更精简
 type Omit2<T,U> = Pick<T,Exclude<keyof T,U>>
 type aa = Omit2<Todo, "description" | "title">;
 
-
-//UNKNOWN: Exclude Extrade 针对 联合类型生效 
+// 复盘 总结 Pick 和 Omit 属于同类型的范型类型
+// Pick<T,U> 从 T 中选出 联合类型 U 的内容。但是前提条件是 U 必须在 T 中
+// Omit 与Pick 一致，唯一不同是，Omit 用于排除掉 符合 U 的元素类型。

@@ -34,7 +34,8 @@ type ReplaceKeys<T, U, R> = T extends T
       [k in keyof T]: k extends Extract<k, U> ? R[Extract<k, keyof R>] : T[k];
     }
   : never;
-/* type ReplaceKeys<U, T, Y> = U extends U
+type ReplaceKeys1<U, T, Y> = U extends U
   ? { [P in keyof U]: P extends T ? (P extends keyof Y ? Y[P] : never) : U[P] }
   : never;
- */
+
+// 复盘，只要遇到联合类型需要分别处理的，都可以使用  U extends U，对联合类型进行拆分

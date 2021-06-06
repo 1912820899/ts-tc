@@ -1,3 +1,4 @@
+// 类型查找
 interface Cat {
   type: "cat";
   breeds: "Abyssinian" | "Shorthair" | "Curl" | "Bengal";
@@ -16,6 +17,7 @@ type dd = "a" extends "a" | "b" ? true : false;
 
 type MyDog = LookUp<Dog | Cat, "dog">;
 
+// 这个更优秀，只要有联合联合类型，跟 Extract  Exclude 少不了联系
 type LookUp1<T extends { type: any }, U> = Extract<T, { type: U }>;
 type MyDog1 = LookUp1<Dog | Cat, "dog">;
 
