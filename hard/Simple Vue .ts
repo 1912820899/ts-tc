@@ -1,44 +1,41 @@
-type TranslateObj<T extends IComputed = IComputed> = {
-  [k in keyof T]: ReturnType<T[k]>;
-};
+// 目前不支持 内部的类型限制
+
+type TranslateObj<T> = T extends Record<string, (...args: any[]) => any>
+  ? { [k in keyof T]: ReturnType<T[k]> }
+  : never;
 
 interface IDataCB {
-  [k: string]: any;
+  [k: string]: string | number;
 }
 interface IComputed {
-  [k: string]: {
-    (): any;
-  };
+  [k: string]: () => any;
 }
-
 interface IMethods {
   [k: string]: () => any;
 }
 
-interface Option<D extends IDataCB, C extends IComputed, M> {
+interface Option<D, C, M> {
   data: (this: void) => D;
   computed: C & ThisType<D>;
-  methods: M & ThisType<D & M>;
+  methods: M & ThisType<D & M & TranslateObj<C>>;
 }
 
 interface Instance {}
 
-// type SimpleVue<D, C, M> = (obj: Option<D, C, M>) => Instance;
+declare function SimpleVue1<D, C, M>(
+  options: Option<D, C, M>
+): any;
 
-declare function SimpleVue1<D, CC, M>(options: Option<D, CC, M>): any;
-
-// const SimpleVue: SimpleVue<IDataCB, IComputed, IMethods> = () => {};
 SimpleVue1({
   data() {
     return {
-      firstname: "Type",
-      lastname: "Challenges",
-      amount: "10",
+      firstname: "leo",
+      lastname: "xiaoxin",
+      amount: 1,
     };
   },
   computed: {
     fullname() {
-      // this.
       return this.firstname + " " + this.lastname;
     },
   },
