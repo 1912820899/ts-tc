@@ -1,5 +1,5 @@
 type MyOmit<T, K> = {
-
+  [k in Exclude<keyof T, K>]: 1;
 };
 
 interface Todo {
