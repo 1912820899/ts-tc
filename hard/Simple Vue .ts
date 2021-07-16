@@ -1,47 +1,30 @@
-// 目前不支持 内部的类型限制
-
-type TranslateObj<T> = T extends Record<string, (...args: any[]) => any>
+type Computed<T> = T extends Record<string, (...args: any[]) => any>
   ? { [k in keyof T]: ReturnType<T[k]> }
   : never;
+declare function SimpleVue<D, C, M>(option: {
+  data?: () => D;
+  computed?: C & ThisType<D & Computed<C>>;
+  methods?: M & ThisType<M & D & Computed<C>>;
+}): any;
 
-interface IDataCB {
-  [k: string]: string | number;
-}
-interface IComputed {
-  [k: string]: () => any;
-}
-interface IMethods {
-  [k: string]: () => any;
-}
-
-interface Option<D, C, M> {
-  data: (this: void) => D;
-  computed: C & ThisType<D>;
-  methods: M & ThisType<D & M & TranslateObj<C>>;
-}
-
-interface Instance {}
-
-declare function SimpleVue1<D, C, M>(
-  options: Option<D, C, M>
-): any;
-
-SimpleVue1({
+SimpleVue({
   data() {
     return {
-      firstname: "leo",
-      lastname: "xiaoxin",
-      amount: 1,
+      list: "sss",
     };
   },
   computed: {
-    fullname() {
-      return this.firstname + " " + this.lastname;
+    cList() {
+      return this.list;
+    },
+    dList() {
+      console.log(this);
     },
   },
   methods: {
     hi() {
-      alert(this.fullname.toLowerCase());
+      console.log(this.cList);
+      console.log(this.dList);
     },
   },
 });
